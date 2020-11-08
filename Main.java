@@ -510,9 +510,14 @@ public class Main {
      */
     public static void get10People() {
         List<Person> people = relationshipDatabase.getAllPeople();  // Get all the people from the database
-        // Output the top 10 people names
-        for (int i = 0; i < 10; i++) {
-            System.out.println(people.get(i).getName());
+        try {
+            // Output the top 10 people names
+            for (int i = 0; i < 10; i++) {
+                System.out.println(people.get(i).getName());
+            }
+        }catch (Exception e){
+            // If an error occur during the retrieving, print error message
+            System.out.println("Cannot get people information!");
         }
     }
 
