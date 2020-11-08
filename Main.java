@@ -455,6 +455,7 @@ public class Main {
                 // If user input 13, exit the program
                 break;
             }
+            // Output an empty line
             System.out.println();
         }
     }
