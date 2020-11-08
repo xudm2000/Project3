@@ -81,7 +81,7 @@ public class Main {
                 System.out.print("Enter Person Name: ");
                 name = nameInput();
                 // Check whether the name is in the database
-                if(!containPerson(name)) {
+                if (!containPerson(name)) {
                     // Ask user to input the person age
                     System.out.print("Enter Person Age: ");
                     age = scanner.nextLine();
@@ -120,7 +120,7 @@ public class Main {
                     } else {
                         System.out.println("Person addition fail");
                     }
-                }else{
+                } else {
                     // if the name is contained in the database, print error message
                     System.out.println("No duplicate person allow!");
                 }
@@ -233,55 +233,61 @@ public class Main {
                 String name1 = nameInput(); // Input person 1 name
                 System.out.print("Enter Person 2 Name: ");
                 String name2 = nameInput(); // input person 2 name
-                // Check whether those two people are in the database
-                if (containPerson(name1) && containPerson(name2)) {
-                    // Check whether the relationship between those two people exists in the database
-                    if (!containRelationship(name1, name2)) {
-                        // If those two people has no relationship, ask user to enter the relationship degree
-                        System.out.println("Enter the relationships between them -->");
-                        System.out.println("1. Brothers/Sisters");
-                        System.out.println("2. Cousins");
-                        System.out.println("3. BestFriends");
-                        System.out.println("4. NormalFriends");
-                        System.out.println("5. Classmates");
-                        System.out.println("6. Colleagues");
-                        System.out.println("7. Acquaintances");
-                        System.out.println("8. Others");
-                        System.out.println("Enter relationship: ");
-                        String relationship = "";
-                        int weight;
-                        relationship = scanner.nextLine();
-                        while (true) {
-                            // If user enter out-of-range input, print the error message and ask them to input again
-                            try {
-                                weight = Integer.parseInt(relationship);
-                                if (weight < 1 || weight > 8) {
+                // Check whether names are equal
+                if (!name1.equals(name2)) {
+                    // Check whether those two people are in the database
+                    if (containPerson(name1) && containPerson(name2)) {
+                        // Check whether the relationship between those two people exists in the database
+                        if (!containRelationship(name1, name2)) {
+                            // If those two people has no relationship, ask user to enter the relationship degree
+                            System.out.println("Enter the relationships between them -->");
+                            System.out.println("1. Brothers/Sisters");
+                            System.out.println("2. Cousins");
+                            System.out.println("3. BestFriends");
+                            System.out.println("4. NormalFriends");
+                            System.out.println("5. Classmates");
+                            System.out.println("6. Colleagues");
+                            System.out.println("7. Acquaintances");
+                            System.out.println("8. Others");
+                            System.out.println("Enter relationship: ");
+                            String relationship = "";
+                            int weight;
+                            relationship = scanner.nextLine();
+                            while (true) {
+                                // If user enter out-of-range input, print the error message and ask them to input again
+                                try {
+                                    weight = Integer.parseInt(relationship);
+                                    if (weight < 1 || weight > 8) {
+                                        System.out.println("Invalid Relationship!");
+                                        System.out.print("Enter relationship: ");
+                                        relationship = scanner.nextLine();
+                                        continue;
+                                    }
+                                    break;
+                                } catch (Exception e) {
+                                    // If user enter non-integer value, print the error message and ask them to input again
                                     System.out.println("Invalid Relationship!");
-                                    System.out.print("Enter relationship: ");
+                                    System.out.print("Enter Relationship: ");
                                     relationship = scanner.nextLine();
-                                    continue;
                                 }
-                                break;
-                            } catch (Exception e) {
-                                // If user enter non-integer value, print the error message and ask them to input again
-                                System.out.println("Invalid Relationship!");
-                                System.out.print("Enter Relationship: ");
-                                relationship = scanner.nextLine();
                             }
-                        }
-                        // Add the relationship, if success, print the success message, otherwise, print error message
-                        if (addRelationship(name1, name2, weight)) {
-                            System.out.println("Relationship between " + name1 + " and " + name2 + " is successfully added");
+                            // Add the relationship, if success, print the success message, otherwise, print error message
+                            if (addRelationship(name1, name2, weight)) {
+                                System.out.println("Relationship between " + name1 + " and " + name2 + " is successfully added");
+                            } else {
+                                System.out.println("Cannot add Relationship between " + name1 + " and " + name2);
+                            }
                         } else {
-                            System.out.println("Cannot add Relationship between " + name1 + " and " + name2);
+                            // if those two people has relationship in the database, print the error message
+                            System.out.println("Relationship between " + name1 + " and " + name2 + " exists in the database!");
                         }
                     } else {
-                        // if those two people has relationship in the database, print the error message
-                        System.out.println("Relationship between " + name1 + " and " + name2 + " exists in the database!");
+                        // If people are not in the database, print the error message
+                        System.out.println("Name(s) not exist in the database!");
                     }
-                }else{
-                    // If people are not in the database, print the error message
-                    System.out.println("Name(s) not exist in the database!");
+                } else {
+                    // If user input two same names, print error message
+                    System.out.println("Names cannot identical");
                 }
             } else if (option.equals("8")) {
                 // Get the relationship between two people
@@ -289,42 +295,48 @@ public class Main {
                 String name1 = nameInput(); // Input person 1 name
                 System.out.print("Enter Person 2 Name: ");
                 String name2 = nameInput(); // Input person 2 name
-                // Check whether those two people are in the database
-                if (containPerson(name1) && containPerson(name2)) {
-                    // Get the weight of the relationship between people
-                    int weight = getRelationshipWeight(name1, name2);
-                    // Print the relationship based on the weight of the relationship
-                    if (weight == 1) {
-                        // Relationship degree 1
-                        System.out.println(name1 + " and " + name2 + " are Brothers/Sisters (1)");
-                    } else if (weight == 2) {
-                        // Relationship degree 2
-                        System.out.println(name1 + " and " + name2 + " are Cousins (2)");
-                    } else if (weight == 3) {
-                        // Relationship degree 3
-                        System.out.println(name1 + " and " + name2 + " are BestFriends (3)");
-                    } else if (weight == 4) {
-                        // Relationship degree 4
-                        System.out.println(name1 + " and " + name2 + " are NormalFriends (4)");
-                    } else if (weight == 5) {
-                        // Relationship degree 5
-                        System.out.println(name1 + " and " + name2 + " are Classmates (5)");
-                    } else if (weight == 6) {
-                        // Relationship degree 6
-                        System.out.println(name1 + " and " + name2 + " are Colleagues (6)");
-                    } else if (weight == 7) {
-                        // Relationship degree 7
-                        System.out.println(name1 + " and " + name2 + " are Acquaintances (7)");
-                    } else if (weight == 8) {
-                        // Relationship degree 8
-                        System.out.println(name1 + " and " + name2 + " are Other relationship (8)");
+                // Check whether two names are identical
+                if (!name1.equals(name2)) {
+                    // Check whether those two people are in the database
+                    if (containPerson(name1) && containPerson(name2)) {
+                        // Get the weight of the relationship between people
+                        int weight = getRelationshipWeight(name1, name2);
+                        // Print the relationship based on the weight of the relationship
+                        if (weight == 1) {
+                            // Relationship degree 1
+                            System.out.println(name1 + " and " + name2 + " are Brothers/Sisters (1)");
+                        } else if (weight == 2) {
+                            // Relationship degree 2
+                            System.out.println(name1 + " and " + name2 + " are Cousins (2)");
+                        } else if (weight == 3) {
+                            // Relationship degree 3
+                            System.out.println(name1 + " and " + name2 + " are BestFriends (3)");
+                        } else if (weight == 4) {
+                            // Relationship degree 4
+                            System.out.println(name1 + " and " + name2 + " are NormalFriends (4)");
+                        } else if (weight == 5) {
+                            // Relationship degree 5
+                            System.out.println(name1 + " and " + name2 + " are Classmates (5)");
+                        } else if (weight == 6) {
+                            // Relationship degree 6
+                            System.out.println(name1 + " and " + name2 + " are Colleagues (6)");
+                        } else if (weight == 7) {
+                            // Relationship degree 7
+                            System.out.println(name1 + " and " + name2 + " are Acquaintances (7)");
+                        } else if (weight == 8) {
+                            // Relationship degree 8
+                            System.out.println(name1 + " and " + name2 + " are Other relationship (8)");
+                        } else {
+                            // No relationship
+                            System.out.println(name1 + " and " + name2 + " have no relationship");
+                        }
                     } else {
-                        // No relationship
-                        System.out.println(name1 + " and " + name2 + " have no relationship");
+                        // If people are not in the database, print the error message
+                        System.out.println("Name(s) not exist in the database!");
                     }
                 } else {
-                    // If people are not in the database, print the error message
-                    System.out.println("Name(s) not exist in the database!");
+                    // If user input two same names, print error message
+                    System.out.println("Names cannot identical");
                 }
             } else if (option.equals("9")) {
                 // Update the relationship
@@ -333,54 +345,59 @@ public class Main {
                 System.out.print("Enter Person 2 Name: ");
                 String name2 = nameInput(); // Input person 2 name
                 // Check whether database has two names
-                if (containPerson(name1) && containPerson(name2)) {
-                    // Check whether those two people has two relationship
-                    if (containRelationship(name1, name2)) {
-                        // Ask user to select new relationship degree
-                        System.out.println("Update the relationships between them -->");
-                        System.out.println("1. Brothers/Sisters");
-                        System.out.println("2. Cousins");
-                        System.out.println("3. BestFriends");
-                        System.out.println("4. NormalFriends");
-                        System.out.println("5. Classmates");
-                        System.out.println("6. Colleagues");
-                        System.out.println("7. Acquaintances");
-                        System.out.println("8. Others");
-                        System.out.println("Enter relationship: ");
-                        String relationship = "";
-                        int weight;
-                        relationship = scanner.nextLine();
-                        while (true) {
-                            try {
-                                weight = Integer.parseInt(relationship);
-                                // If user enter out-of-range input, print the error message and ask them to input again
-                                if (weight < 1 || weight > 8) {
+                if (!name1.equals(name2)) {
+                    if (containPerson(name1) && containPerson(name2)) {
+                        // Check whether those two people has two relationship
+                        if (containRelationship(name1, name2)) {
+                            // Ask user to select new relationship degree
+                            System.out.println("Update the relationships between them -->");
+                            System.out.println("1. Brothers/Sisters");
+                            System.out.println("2. Cousins");
+                            System.out.println("3. BestFriends");
+                            System.out.println("4. NormalFriends");
+                            System.out.println("5. Classmates");
+                            System.out.println("6. Colleagues");
+                            System.out.println("7. Acquaintances");
+                            System.out.println("8. Others");
+                            System.out.println("Enter relationship: ");
+                            String relationship = "";
+                            int weight;
+                            relationship = scanner.nextLine();
+                            while (true) {
+                                try {
+                                    weight = Integer.parseInt(relationship);
+                                    // If user enter out-of-range input, print the error message and ask them to input again
+                                    if (weight < 1 || weight > 8) {
+                                        System.out.println("Invalid Relationship!");
+                                        System.out.print("Enter relationship: ");
+                                        relationship = scanner.nextLine();
+                                        continue;
+                                    }
+                                    break;
+                                } catch (Exception e) {
+                                    // If user enter non-integer value, print the error message and ask them to input again
                                     System.out.println("Invalid Relationship!");
-                                    System.out.print("Enter relationship: ");
+                                    System.out.print("Enter Relationship: ");
                                     relationship = scanner.nextLine();
-                                    continue;
                                 }
-                                break;
-                            } catch (Exception e) {
-                                // If user enter non-integer value, print the error message and ask them to input again
-                                System.out.println("Invalid Relationship!");
-                                System.out.print("Enter Relationship: ");
-                                relationship = scanner.nextLine();
                             }
-                        }
-                        // Update the relationship, if success, print the success message, otherwise, print error message
-                        if (updateRelationship(name1, name2, weight)) {
-                            System.out.println("Relationship between " + name1 + " and " + name2 + " is successfully updated");
+                            // Update the relationship, if success, print the success message, otherwise, print error message
+                            if (updateRelationship(name1, name2, weight)) {
+                                System.out.println("Relationship between " + name1 + " and " + name2 + " is successfully updated");
+                            } else {
+                                System.out.println("Cannot update Relationship between " + name1 + " and " + name2);
+                            }
                         } else {
-                            System.out.println("Cannot update Relationship between " + name1 + " and " + name2);
+                            // If the relationship is not existed, print the error message
+                            System.out.println("Cannot update non-exist relationship!");
                         }
-                    }else{
-                        // If the relationship is not existed, print the error message
-                        System.out.println("Cannot update non-exist relationship!");
+                    } else {
+                        // if name is not in the database, print the error message
+                        System.out.println("Name(s) not exist in the database!");
                     }
                 } else {
-                    // if name is not in the database, print the error message
-                    System.out.println("Name(s) not exist in the database!");
+                    // If user input two same names, print error message
+                    System.out.println("Names cannot identical");
                 }
             } else if (option.equals("10")) {
                 // Delete the relationship
@@ -388,23 +405,29 @@ public class Main {
                 String name1 = nameInput(); // Input person 1 name
                 System.out.print("Enter Person 2 Name: ");
                 String name2 = nameInput(); // Input person 2 name
-                // Check whether database has two names
-                if (containPerson(name1) && containPerson(name2)) {
-                    // Check whether those two people has two relationship
-                    if (containRelationship(name1, name2)) {
-                        // Delete the relationship, if success, print the success message, otherwise, print error message
-                        if (deleteRelationship(name1, name2)) {
-                            System.out.println("Relationship between " + name1 + " and " + name2 + " is successfully deleted");
+                // Check whether two names are identical
+                if (!name1.equals(name2)) {
+                    // Check whether database has two names
+                    if (containPerson(name1) && containPerson(name2)) {
+                        // Check whether those two people has two relationship
+                        if (containRelationship(name1, name2)) {
+                            // Delete the relationship, if success, print the success message, otherwise, print error message
+                            if (deleteRelationship(name1, name2)) {
+                                System.out.println("Relationship between " + name1 + " and " + name2 + " is successfully deleted");
+                            } else {
+                                System.out.println("Cannot delete Relationship between " + name1 + " and " + name2);
+                            }
                         } else {
-                            System.out.println("Cannot delete Relationship between " + name1 + " and " + name2);
+                            // If the relationship is not existed, print the error message
+                            System.out.println("Cannot delete non-exist relationship!");
                         }
                     } else {
-                        // If the relationship is not existed, print the error message
-                        System.out.println("Cannot delete non-exist relationship!");
+                        // if name is not in the database, print the error message
+                        System.out.println("Name(s) not exist in the database!");
                     }
                 } else {
-                    // if name is not in the database, print the error message
-                    System.out.println("Name(s) not exist in the database!");
+                    // If user input two same names, print error message
+                    System.out.println("Names cannot identical");
                 }
             } else if (option.equals("11")) {
                 // Check whether the relationship exists in the database
@@ -412,17 +435,23 @@ public class Main {
                 String name1 = nameInput(); // Input person 1 name
                 System.out.print("Enter Person 2 Name: ");
                 String name2 = nameInput(); // Input person 2 name
-                // Check whether people are in the database
-                if (containPerson(name1) && containPerson(name2)) {
-                    // Check whether the relationship exists, and print the result
-                    if (containRelationship(name1, name2)) {
-                        System.out.println("Relationship between " + name1 + " and " + name2 + " exists in the database");
+                // Check whether two names are identical
+                if (!name1.equals(name2)) {
+                    // Check whether people are in the database
+                    if (containPerson(name1) && containPerson(name2)) {
+                        // Check whether the relationship exists, and print the result
+                        if (containRelationship(name1, name2)) {
+                            System.out.println("Relationship between " + name1 + " and " + name2 + " exists in the database");
+                        } else {
+                            System.out.println("Relationship between " + name1 + " and " + name2 + " NOT exists in the database");
+                        }
                     } else {
-                        System.out.println("Relationship between " + name1 + " and " + name2 + " NOT exists in the database");
+                        // If name is not in the database, print the error message
+                        System.out.println("Name(s) not exist in the database!");
                     }
                 } else {
-                    // If name is not in the database, print the error message
-                    System.out.println("Name(s) not exist in the database!");
+                    // If user input two same names, print error message
+                    System.out.println("Names cannot identical");
                 }
             } else if (option.equals("12")) {
                 // Get the shortest path and the total degree between two people
@@ -430,29 +459,35 @@ public class Main {
                 String name1 = nameInput(); // Input person 1 name
                 System.out.print("Enter Person 2 Name: ");
                 String name2 = nameInput(); // Input person 2 name
-                // Check whether those two people are in the database
-                if (containPerson(name1) && containPerson(name2)) {
-                    List<Person> path = getPathOfRelationship(name1, name2);    // Get the path of relationship
-                    // Check whether the path exists in the database
-                    if (path != null) {
-                        // Print the path with person name and age: Name(Age) -> Name(Age) ...
-                        for (int i = 0; i < path.size(); i++) {
-                            System.out.print(path.get(i).getName() + "(" + path.get(i).getAge() + ")");
-                            if (i != path.size() - 1) {
-                                System.out.print(" -> ");
-                            } else {
-                                System.out.println();
+                // Check whether two names are identical
+                if (!name1.equals(name2)) {
+                    // Check whether those two people are in the database
+                    if (containPerson(name1) && containPerson(name2)) {
+                        List<Person> path = getPathOfRelationship(name1, name2);    // Get the path of relationship
+                        // Check whether the path exists in the database
+                        if (path != null) {
+                            // Print the path with person name and age: Name(Age) -> Name(Age) ...
+                            for (int i = 0; i < path.size(); i++) {
+                                System.out.print(path.get(i).getName() + "(" + path.get(i).getAge() + ")");
+                                if (i != path.size() - 1) {
+                                    System.out.print(" -> ");
+                                } else {
+                                    System.out.println();
+                                }
                             }
+                            // Print the total degree of the relationship
+                            System.out.println("Total Degree of Relationship between " + name1 + " and " + name2 + " is " + getTotalDegreeOfRelationship(name1, name2));
+                        } else {
+                            // If relationship is not in the database, print the error message
+                            System.out.println("Cannot find path of Relationship between " + name1 + " and " + name2);
                         }
-                        // Print the total degree of the relationship
-                        System.out.println("Total Degree of Relationship between " + name1 + " and " + name2 + " is " + getTotalDegreeOfRelationship(name1, name2));
                     } else {
-                        // If relationship is not in the database, print the error message
-                        System.out.println("Cannot find path of Relationship between " + name1 + " and " + name2);
+                        // If name is not in the database, print the error message
+                        System.out.println("Name(s) not exist in the database!");
                     }
                 } else {
-                    // If name is not in the database, print the error message
-                    System.out.println("Name(s) not exist in the database!");
+                    // If user input two same names, print error message
+                    System.out.println("Names cannot identical");
                 }
             } else {
                 // If user input 13, exit the program
@@ -493,6 +528,7 @@ public class Main {
 
     /**
      * Ask user to input the name
+     *
      * @return name
      */
     public static String nameInput() {
@@ -518,7 +554,7 @@ public class Main {
             for (int i = 0; i < 10; i++) {
                 System.out.println(people.get(i).getName());
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             // If an error occur during the retrieving, print error message
             System.out.println("Cannot get people information!");
         }
@@ -526,6 +562,7 @@ public class Main {
 
     /**
      * Get the person information
+     *
      * @param name
      * @return Person object
      */
@@ -535,6 +572,7 @@ public class Main {
 
     /**
      * Get the relationship weight between two person
+     *
      * @param name1
      * @param name2
      * @return relationship weight, -1 if no relationship exists
@@ -545,6 +583,7 @@ public class Main {
 
     /**
      * Add the person to the database
+     *
      * @param name
      * @param age
      * @param profession
@@ -556,6 +595,7 @@ public class Main {
 
     /**
      * Add the relationship between two people
+     *
      * @param person1
      * @param person2
      * @param weight
@@ -567,6 +607,7 @@ public class Main {
 
     /**
      * Delete the person from the database
+     *
      * @param name
      * @return true if delete successfully, otherwise return false
      */
@@ -576,6 +617,7 @@ public class Main {
 
     /**
      * Update person age
+     *
      * @param name
      * @param newAge
      * @return true if update successfully, otherwise return false
@@ -586,6 +628,7 @@ public class Main {
 
     /**
      * Update person profession
+     *
      * @param name
      * @param newProfession
      * @return true if update successfully, otherwise return false
@@ -596,6 +639,7 @@ public class Main {
 
     /**
      * Check whether the person contained in the database
+     *
      * @param name
      * @return true if contains, otherwise return false
      */
@@ -605,6 +649,7 @@ public class Main {
 
     /**
      * Check whether the relationship contained in the database
+     *
      * @param name1
      * @param name2
      * @return true if contains, otherwise return false
@@ -615,6 +660,7 @@ public class Main {
 
     /**
      * Delete relationship between two people
+     *
      * @param person1
      * @param person2
      * @return true if delete successfully, otherwise return false
@@ -625,6 +671,7 @@ public class Main {
 
     /**
      * Update the relationship weight
+     *
      * @param person1
      * @param person2
      * @param weight
@@ -636,6 +683,7 @@ public class Main {
 
     /**
      * Get the shortest path of the relationship
+     *
      * @param name1
      * @param name2
      * @return List object that contains the path, null if relationship not found
@@ -646,6 +694,7 @@ public class Main {
 
     /**
      * Get the total degree of relationship
+     *
      * @param name1
      * @param name2
      * @return the total degree of relationship, return -1 if no relationship found
@@ -656,6 +705,7 @@ public class Main {
 
     /**
      * Total number of people in the database
+     *
      * @return total number of people
      */
     public static int totalNumOfPeople() {
@@ -664,6 +714,7 @@ public class Main {
 
     /**
      * Total number of relationships in the database
+     *
      * @return total number of relationships
      */
     public static int totalNumOfRelationships() {
