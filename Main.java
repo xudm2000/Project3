@@ -459,9 +459,13 @@ public class Main {
         }
     }
 
+    /**
+     * Home page view
+     */
     public static void homePage() {
+        // Print the total number of people and relationships in the databases, as well as operation options
         System.out.println("--- Welcome to the network relationship system ---");
-        System.out.println("Currently, there are " + totalNumOfPerson() + " People, and " + totalNumOfRelationships() + " relationships.");
+        System.out.println("Currently, there are " + totalNumOfPeople() + " People, and " + totalNumOfRelationships() + " relationships.");
         System.out.println("    1. Get first 10 people in the database");
         System.out.println("-> Person Operations: ");
         System.out.println("    2. Get a Person info");
@@ -645,7 +649,7 @@ public class Main {
      * Total number of people in the database
      * @return total number of people
      */
-    public static int totalNumOfPerson() {
+    public static int totalNumOfPeople() {
         return relationshipDatabase.getNumberOfPersons();
     }
 
