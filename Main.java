@@ -133,6 +133,9 @@ public class Main {
                 if (person != null) {
                     // If can find the person, output the person information and ask user which info needs to update
                     System.out.println("Here is the info of " + name + ":");
+                    System.out.println(person.getName());
+                    System.out.println("1. age: " + person.getAge());
+                    System.out.println("2. profession: " + person.getProfession());
                     System.out.print("Select which info to update (1-2): ");
                     // Ask user to select which info needs to update
                     String opt = "";
@@ -445,7 +448,7 @@ public class Main {
                         System.out.println("Total Degree of Relationship between " + name1 + " and " + name2 + " is " + getTotalDegreeOfRelationship(name1, name2));
                     } else {
                         // If relationship is not in the database, print the error message
-                        System.out.println("Cannot find Relationship between " + name1 + " and " + name2);
+                        System.out.println("Cannot find path of Relationship between " + name1 + " and " + name2);
                     }
                 } else {
                     // If name is not in the database, print the error message
