@@ -564,7 +564,7 @@ public class Main {
      * Get the person information
      *
      * @param name
-     * @return Person object
+     * @return Person object, or null if not found
      */
     public static Person getPerson(String name) {
         return relationshipDatabase.getPerson(name);
