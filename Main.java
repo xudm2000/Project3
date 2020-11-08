@@ -42,7 +42,7 @@ public class Main {
                     && !option.equals("11")
                     && !option.equals("12")
                     && !option.equals("13")) {
-                System.out.println("Invalid Option! Please try again: ");
+                System.out.print("Invalid Option! Please try again: ");
                 option = scanner.nextLine();
             }
 
